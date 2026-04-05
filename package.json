@@ -25,6 +25,7 @@
     "better-sqlite3": "11.10.0",
     "cron-parser": "5.5.0",
     "grammy": "^1.42.0",
+    "openai": "^6.27.0",
     "qrcode": "^1.5.4",
     "qrcode-terminal": "^0.12.0"
   },
