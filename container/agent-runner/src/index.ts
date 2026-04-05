@@ -37,6 +37,7 @@ interface ContainerInput {
   assistantName?: string;
   script?: string;
   githubToken?: string;
+  imageAttachments?: Array<{ relativePath: string; mediaType: string }>;
 }
 
 interface ContainerOutput {
@@ -438,6 +439,16 @@ async function main(): Promise<void> {
 
     log(`Script wakeAgent=true, enriching prompt with data`);
     prompt = `[SCHEDULED TASK]\n\nScript output:\n${JSON.stringify(scriptResult.data, null, 2)}\n\nInstructions:\n${containerInput.prompt}`;
+  }
+
+  // Notify agent about image attachments available on the filesystem.
+  // Images are saved by the host WhatsApp channel and mounted at /workspace/group/attachments/.
+  // The prompt already contains [Image: attachments/xxx.jpg] references.
+  if (containerInput.imageAttachments?.length) {
+    const imgPaths = containerInput.imageAttachments.map(
+      (img) => `/workspace/group/${img.relativePath}`
+    );
+    log(`Image attachments available: ${imgPaths.join(', ')}`);
   }
 
   // Load memory files as additional system context.

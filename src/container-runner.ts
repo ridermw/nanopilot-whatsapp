@@ -41,6 +41,7 @@ export interface ContainerInput {
   assistantName?: string;
   script?: string;
   githubToken?: string;
+  imageAttachments?: Array<{ relativePath: string; mediaType: string }>;
 }
 
 export interface ContainerOutput {
